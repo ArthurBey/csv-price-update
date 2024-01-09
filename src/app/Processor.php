@@ -4,7 +4,7 @@ namespace App;
 
 class Processor
 {
-    public function processFiles($newPricingFile, $oldPricingFile, $suffix)
+    public function processFiles(string $newPricingFile, string $oldPricingFile, string $suffix): void
     {
         $newPricingData = $this->readCSV($newPricingFile);
         $oldPricingData = $this->readCSV($oldPricingFile);
@@ -14,17 +14,19 @@ class Processor
         $this->writeCSV($updatedData);
     }
 
-    private function readCSV($file)
+    private function readCSV(string $file): array
     {
-        // Read the CSV file and return its contents
+        $data = [];
+
+        return $data;
     }
 
-    private function updatePricingData($newPricingData, $oldPricingData, $suffix)
+    private function updatePricingData(array $newPricingData, array $oldPricingData, string $suffix): array
     {
         // Process the data and return the updated data
     }
 
-    private function writeCSV($data)
+    private function writeCSV($data): void
     {
         // Write the processed data to a new CSV file
     }
