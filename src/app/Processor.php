@@ -4,7 +4,7 @@ namespace App;
 
 class Processor
 {
-    public function processFiles(string $newPricingFile, string $oldPricingFile, string $suffix): void
+    public function processFiles(string $newPricingFile, string $oldPricingFile, string $suffix, string $outputFilePath): void
     {
         $newPricingData = $this->readCSV($newPricingFile);
         $oldPricingData = $this->readCSV($oldPricingFile);
@@ -18,7 +18,7 @@ class Processor
         // Debugging: Check if data is updated
         error_log("Updated Data: " . print_r($updatedData, true));
 
-        $this->writeCSV($updatedData);
+        $this->writeCSV($updatedData, $outputFilePath);
     }
 
     private function readCSV(string $filePath): array
@@ -35,28 +35,32 @@ class Processor
 
     private function updatePricingData(array $newPricingData, array $oldPricingData, string $suffix): array
     {
-        var_dump($newPricingData);
-        echo "STOP LA";
-        exit();
-        $specialPrefixes = ['CSD-CA-', 'WP-3D-AS-', 'WP-4D-AS-', 'WP-6D-AS-']; // Special prefixes
-        $updatedData = $oldPricingData;
+//        echo '<pre>';
+//        print_r($oldPricingData);
+//        echo '</pre>';
+//        exit();
 
-        foreach ($newPricingData as $newData) {
-            $itemcodePrefix = $newData[0]; // Assuming 'itemcode prefix' is at index 0
-            $priceTypeID = $newData[1]; // Assuming 'PriceTypeID' is at index 1
+        $specialPrefixes = ['CSD-CA-', 'WP-3D-AS-', 'WP-4D-AS-', 'WP-6D-AS-'];
+        $updatedData = $oldPricingData; // Initialize updatedData with oldPricingData
 
-            // Replace suffix for special prefixes
+        for ($i = 1; $i < count($newPricingData[0]); $i++) {
+            $itemcodePrefix = $newPricingData[0][$i];
+            $priceTypeID = $newPricingData[1][$i];
+            $vatInc = $newPricingData[2][$i];
+            $localCV = $newPricingData[3][$i];
+            $qv = $newPricingData[4][$i];
+            $retailProfitUSD = $newPricingData[5][$i];
+
             $actualSuffix = in_array($itemcodePrefix, $specialPrefixes) && $suffix === 'FR' ? 'EU' : $suffix;
             $fullItemCode = $itemcodePrefix . $actualSuffix;
 
-            foreach ($oldPricingData as $key => $oldData) {
-                if ($oldData[0] === $fullItemCode && $oldData[2] == $priceTypeID) { // Assuming 'itemcode' and 'PriceTypeID' at indices 0 and 2 in old data
-                    // Update data (indices are assumed, you need to replace them with actual indices)
-                    $updatedData[$key][3] = $newData['VatInc']; // 'VatInc' value from new data
-                    $updatedData[$key][4] = $newData['LocalCV']; // 'LocalCV'
-                    $updatedData[$key][5] = $newData['QV']; // 'QV'
-                    $updatedData[$key][6] = $newData['RetailProfit_USD']; // 'RetailProfit_USD'
-                    // Continue updating other relevant fields
+            foreach ($updatedData as $key => $oldData) {
+                if ($key > 0 && $oldData[2] === $fullItemCode && $oldData[4] == $priceTypeID) {
+                    // Update necessary fields in updatedData
+                    $updatedData[$key][15] = $vatInc;
+                    $updatedData[$key][16] = $localCV;
+                    $updatedData[$key][17] = $qv;
+                    $updatedData[$key][8] = $retailProfitUSD;
                 }
             }
         }
