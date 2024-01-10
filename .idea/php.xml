@@ -10,6 +10,15 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/src/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/src/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/src/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/src/vendor/composer" />
+    </include_path>
+  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />

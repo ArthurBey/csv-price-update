@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Upload CSV Files</h1>
-<form action="upload.php" method="post" enctype="multipart/form-data">
+<form action="index.php" method="post" enctype="multipart/form-data">
     <label for="newPricingFile">New Pricing CSV:</label>
     <input type="file" id="newPricingFile" name="newPricingFile" required><br><br>
 
