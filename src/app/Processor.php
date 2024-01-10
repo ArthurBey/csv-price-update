@@ -40,7 +40,8 @@ class Processor
 //        echo '</pre>';
 //        exit();
 
-        $specialPrefixes = ['CSD-CA-', 'WP-3D-AS-', 'WP-4D-AS-', 'WP-6D-AS-'];
+        $specialPrefixes = ['CSD-CA-', 'WP-3D-AS-', 'WP-4D-AS-', 'WP-6D-AS-', 'SE-03-', 'PF-03-', 'CY-03-', 'CJ-03-', 'TS-03-', 'NC-03-', 'CC-03-', 'SE-05-', 'PF-05-', 'CY-05-', 'CJ-05-', 'TS-05-', 'NC-05-', 'CC-05-'];
+
         $updatedData = $oldPricingData; // Initialize updatedData with oldPricingData
 
         for ($i = 1; $i < count($newPricingData[0]); $i++) {
